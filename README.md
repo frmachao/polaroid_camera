@@ -16,8 +16,6 @@ Remixed from [https://glitch.com/~polaroid-css](https://glitch.com/~polaroid-css
 - 支持照片展示,通过照片墙的方式展示在相机下方
 - 支持照片导出
 
-## 是否使用 react 编写？
-如何在react 中操作画布？
 
 ## 参考
 - [一个使用css filter属性给图片添加滤镜的调试网站](https://www.cssfilters.co/)
