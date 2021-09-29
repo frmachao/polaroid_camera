@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Interactive Polaroid</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=0.5, minimum-scale=0.5">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.3/gh-fork-ribbon.min.css" />
+  <link rel="stylesheet" href="./style.css">
+  <script src="./script.js" defer></script>
+</head>
+
+<body>
+  <a class="github-fork-ribbon" href="https://github.com/frmachao/polaroid_camera" data-ribbon="Fork me on GitHub"
+    title="Fork me on GitHub">Fork me on GitHub</a>
+  <div class="camera">
+    <div class="top">
+      <div class="flash-overlay"></div>
+      <div class="flash"></div>
+      <div class="timer clickable"></div>
+      <div class="sensor"></div>
+      <div class="lens draggable">
+        <div class="glass no-clickable"></div>
+      </div>
+      <div class="shutter clickable transition"></div>
+      <div class="viewfinder">
+        <div class="glass">
+          <div class="back"></div>
+        </div>
+      </div>
+      <div class="toggle-container">
+        <div class="toggle clickable transition lighten"></div>
+      </div>
+      <div class="power"></div>
+      <div class="title"></div>
+    </div>
+    <div class="bottom">
+      <div class="toggle-container">
+        <div class="toggle clickable">
+          <div class="handle"></div>
+        </div>
+      </div>
+      <div class="printer">
+        <span class="picture"></span>
+      </div>
+      <div class="labels">
+        <div class="rainbow"></div>
+        <div class="logo">Polaroid</div>
+        <div class="type"></div>
+      </div>
+    </div>
+  </div>
+  <div class="background-container">
+    <div class="background-image transition"></div>
+  </div>
+
+</body>
+
+</html>
