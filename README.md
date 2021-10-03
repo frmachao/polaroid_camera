@@ -1,4 +1,8 @@
 # Making the HTML&CSS&JavaScript Polaroid camera come to life! 📸 
+
+![3tZBqj](https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/3tZBqj.png)
+
+![R73wre](https://cdn.jsdelivr.net/gh/frmachao/images@blog/uPic/R73wre.png)
 ## 前言
 
 起初我被 仅用 HTML/CSS 制作的[宝丽来相机@fossheim](https://dev.to/fossheim/how-i-recreated-a-polaroid-camera-with-css-gradients-only-4la5) 震撼了。如果你错过了，去这里看看。
@@ -32,6 +36,12 @@
 目标元素的父元素如果是 `position: fixed` 绘制出的 canvas 会显示不全
 
 是否解决： 否
+
+## 兼容性
+
+- 推荐使用桌面端浏览器访问，不支持 `IE`
+- 微信浏览器访问时无法生成图片
+- ios 14 safari 、chrome 测试通过
 
 ## 参考
 - [一个使用css filter属性给图片添加滤镜的调试网站](https://www.cssfilters.co/)
