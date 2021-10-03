@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <input type="button" title="HTML5摄像头" value="开启摄像头" onclick="getMedia()" />
+    <video id="video" width="500px" height="500px" autoplay="autoplay" style="display: none;"></video>
+    <button id="snap" onclick="takePhoto()">拍照</button>
+    <!-- 触发按钮 -->
+    <button id="triggerBtn">模态框</button>
+
+    <!-- 模态框 -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>photo</h2>
+                <span id="closeBtn" class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class= "photo">
+                    <figure class="filter">
+                        <canvas id="canvas" width="300px" height="300px"></canvas>
+                    </figure>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="saveImg">保存图片</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="./html2canvas.js"></script>
+<script src="./script.js"></script>
+
+</html>

@@ -1,11 +1,15 @@
+@import './modal.css';
 * {
-  padding: 0;
-  margin: 0;
   box-sizing: border-box;
 }
 
-html,body{
+html {
   height: 100%;
+}
+body{
+  height: 100%;
+  background-color: lightblue;
+  background-image: radial-gradient(#9CDCE0, #9CD4E0);
 }
 
 .camera {
@@ -70,9 +74,8 @@ html,body{
   width: inherit;
   left: 10px;
   top:18px;
-  height: 450px;
+  height: 0px;
   overflow: hidden;
-  /* animation: print 3s; */
 }
 .camera .bottom .printer .picture::before {
   content: "";
@@ -80,7 +83,7 @@ html,body{
   box-sizing: border-box;
   background: #555;
   width: 450px;
-  height: 450px;
+  height: 350px;
   border: solid linen;
   border-width: 10px 10px 10px 10px;
   z-index: 999;
@@ -553,36 +556,6 @@ html,body{
   box-shadow: 15px 55px 60px 5px #767072;
 }
 
-.background-container {
-  background: #fff;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  overflow: hidden;
-}
-
-.background-image {
-  background-image: url("https://images.unsplash.com/photo-1579911092621-fd9212a786c6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=100");
-  background-repeat: no-repeat;
-  /* filter: blur(10px); */
-  height: 100%;
-  background-size: 100%;
-}
-
-@media screen and (max-width: 1200px) {
-  .background-image {
-    background-image: url("https://images.unsplash.com/photo-1579911092621-fd9212a786c6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&h=1400&q=100");
-  }
-}
-
-@media screen and (max-width: 800px) {
-  .background-image {
-    background-image: url("https://images.unsplash.com/photo-1579911092621-fd9212a786c6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&h=1600&q=100");
-  }
-}
-
 .lens .glass {
   z-index: 100;
 }
@@ -636,31 +609,3 @@ html,body{
   background: none;
 }
 
-.filter {
-  position: relative;
-  -webkit-filter: sepia(30%);
-  filter: sepia(30%);
-}
-.filter::before {
-  content: "";
-  display: block;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  position: absolute;
-  pointer-events: none;
-  mix-blend-mode: color-burn;
-  background: -webkit-radial-gradient(
-    50% 50%,
-    circle closest-corner,
-    rgba(224, 231, 230, 1) 40,
-    rgba(43, 42, 161, 0.6)
-  );
-  background: radial-gradient(
-    50% 50%,
-    circle closest-corner,
-    rgba(224, 231, 230, 1) 40,
-    rgba(43, 42, 161, 0.6)
-  );
-}

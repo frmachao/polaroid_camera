@@ -1,11 +1,132 @@
+// from https://zhuanlan.zhihu.com/p/76517599
+function getMedia() {
+  let constraints = {
+    //参数
+    video: { width: 500, height: 500, facingMode: "user" },
+  };
+  //获得video摄像头区域
+  let video = document.getElementById("video");
+  //返回的Promise对象
+  let promise = navigator.mediaDevices.getUserMedia(constraints);
+  //then()异步，调用MediaStream对象作为参数
+  promise.then(function (MediaStream) {
+    video.srcObject = MediaStream;
+    video.play();
+  });
+}
+
+function takePhoto() {
+  //获得Canvas对象
+  let video = document.getElementById("video");
+  let canvas = document.getElementById("canvas");
+  let ctx = canvas.getContext('2d');
+  //绘图
+  ctx.drawImage(video, 0, 0, 300, 300);
+}
+
+/*建立模态框对象*/
+var modalBox = {};
+
+/*获取模态框*/
+modalBox.modal = document.getElementById("myModal");
+
+/*获得trigger按钮*/
+modalBox.triggerBtn = document.getElementById("triggerBtn");
+
+/*获得关闭按钮*/
+modalBox.closeBtn = document.getElementById("closeBtn");
+
+/*获得保存按钮*/
+modalBox.saveImg = document.getElementById("saveImg")
+
+/*模态框显示*/
+modalBox.show = function () {
+  this.modal.style.display = "block";
+}
+/**
+ * 保存照片
+ */
+modalBox.exportCanvasAsPNG = function (id, fileName) {
+  const photo = document.querySelector(".photo")
+  const modal_content = document.querySelector(".modal-content")
+  console.log(photo.offsetLeft + modal_content.offsetLeft)
+  console.log(-(photo.offsetTop))
+  html2canvas(photo, {
+    useCORS: true,
+    x: (photo.offsetLeft + modal_content.offsetLeft),
+    y: (-(photo.offsetTop))
+  }).then(canvas => {
+    var div = document.createElement("div");
+    div.id = "hidden_canvas";
+    div.style.display = "none";
+    document.body.appendChild(div);
+    document.querySelector('#hidden_canvas').appendChild(canvas);
+    var canvasElement = document.getElementById('hidden_canvas').childNodes[0];
+    var MIME_TYPE = "image/png";
+
+    var imgURL = canvasElement.toDataURL(MIME_TYPE);
+
+    var dlLink = document.createElement('a');
+    dlLink.download = `${absoluteHumanTime(new Date)}.png`;
+    dlLink.href = imgURL;
+    dlLink.dataset.downloadurl = [MIME_TYPE, dlLink.download, dlLink.href].join(':');
+
+    document.body.appendChild(dlLink);
+    dlLink.click();
+    document.body.removeChild(dlLink);
+    document.body.removeChild(div);
+  });
+}
+
+/*模态框关闭*/
+modalBox.close = function () {
+  this.modal.style.display = "none";
+}
+
+/*当用户点击模态框内容之外的区域，模态框也会关闭*/
+modalBox.outsideClick = function () {
+  var modal = this.modal;
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+}
+
+/*模态框初始化*/
+modalBox.init = function () {
+  var that = this;
+  this.triggerBtn.onclick = function () {
+    that.show();
+}
+  this.closeBtn.onclick = function () {
+    that.close();
+  }
+  this.saveImg.onclick = function () {
+    that.exportCanvasAsPNG()
+  }
+  this.outsideClick();
+}
+modalBox.init();
+
+function absoluteHumanTime(t) {
+  return `${t.getFullYear()}.${t.getMonth() + 1
+    }.${t.getDate()}`;
+}
+
 const state = {
+  // 相机镜头的角度
   currentAngle: 0,
   backgroundOpacity: 1,
   backgroundColor: '#fff',
   isFlashing: false,
+  // css 滤镜属性
   backgroundFilters: {
+    // 明亮度
     brightness: 100,
+    // 对比度
     contrast: 100,
+    // 模糊度
     blur: 0
   }
 };
@@ -14,7 +135,7 @@ const animationDuration = 400;
 
 // Filters too expensive for my macbook air :(
 // Can try enabling if you have a good GPU
-const enableCSSFilters = false;
+const enableCSSFilters = true;
 
 function getElement(className) {
   return document.getElementsByClassName(className)[0];
@@ -26,22 +147,21 @@ if (window.self !== window.top) {
   camera.style.scale = 0.7;
 }
 
-const background = getElement('background-image');
-
-// Lock background on mobile
-if (/Mobi/.test(navigator.userAgent)) {
-  background.style.backgroundSize = 'cover';
-}
+const background = document.querySelector('body');
 
 const backroundContainer = getElement('background-container');
 const filmDoorLever = getElement('handle');
+// 滤镜切换
 const lightenDarkenToggle = getElement('lighten');
 const timer = getElement('timer');
+// 镜头
 const lens = getElement('lens');
 const glass = getElement('glass');
 // 快门
 const shutter = getElement('shutter');
+// 闪光灯
 const flashOverlay = getElement('flash-overlay');
+const picture = getElement('picture')
 
 filmDoorLever.parentElement.addEventListener("mousedown", onClickFilmDoor);
 lightenDarkenToggle.parentElement.addEventListener("mousedown", onClickLightenDarken);
@@ -81,43 +201,14 @@ function formatBackgroundFilters({ backgroundFilters }) {
 
 function onClickLightenDarken() {
   const resetTransform = lightenDarkenToggle.style.transform;
-
-  console.log(state.backgroundFilters)
-
   if (resetTransform) {
     lightenDarkenToggle.style.transform = '';
-    state.backgroundOpacity = 1;
-    if (enableCSSFilters) {
-      state.backgroundFilters.brightness = 100;
-      state.backgroundFilters.contrast = 100;
-    }
   } else if (lightenDarkenToggle.classList.contains('lighten')) {
     lightenDarkenToggle.style.transform = 'translateX(15px)';
     lightenDarkenToggle.classList.remove('lighten');
-    if (enableCSSFilters) {
-      state.backgroundFilters.brightness = 110;
-      state.backgroundFilters.contrast = 90;
-    } else {
-      state.backgroundOpacity = 0.9;
-      state.backgroundColor = '#fff';
-    }
   } else {
     lightenDarkenToggle.style.transform = 'translate(-15px)';
     lightenDarkenToggle.classList.add('lighten');
-    if (enableCSSFilters) {
-      state.backgroundFilters.brightness = 90;
-      state.backgroundFilters.contrast = 110;
-    } else {
-      state.backgroundOpacity = 0.9;
-      state.backgroundColor = '#000';
-    }
-  }
-
-  if (enableCSSFilters) {
-    background.style.filter = formatBackgroundFilters(state);
-  } else {
-    background.style.opacity = state.backgroundOpacity;
-    backroundContainer.style.backgroundColor = state.backgroundColor;
   }
 }
 
@@ -126,13 +217,14 @@ function onTouchShutterStart(e) {
   if (!state.isFlashing) {
     shutter.classList.add('shutter-clicked');
     state.isFlashing = true;
-    backroundContainer.style.backgroundColor = '#fff';
     flashOverlay.style.opacity = 1;
     background.style.opacity = 0.75;
 
     setTimeout(() => {
+      takePhoto()
       flashOverlay.style.transition = `opacity ${animationDuration * 2}ms ease-out`;
       background.style.transition = `opacity ${animationDuration * 2}ms ease-out`;
+      picture.style.animation = `print  ${animationDuration * 6}ms`
       flashOverlay.style.opacity = 0;
       background.style.opacity = 1;
     }, 0);
@@ -141,8 +233,11 @@ function onTouchShutterStart(e) {
       state.isFlashing = false;
       flashOverlay.style.transition = '';
       background.style.transition = '';
-      backroundContainer.style.backgroundColor = state.backgroundColor;
     }, animationDuration * 2);
+    setTimeout(() => {
+      picture.style.animation = '';
+      modalBox.triggerBtn.click()
+    }, animationDuration * 6);
   }
 }
 
@@ -227,19 +322,6 @@ function handleMouseMove(e) {
     posX,
     posY
   } = calculateRelativeLensAngle(e);
-
-  // TODO: add relative zoom
-  // Need to capture when change in direction is detected
-  // const modifier = state.startingDragProperties.zoomingIn ? 1 : -1;
-  // const relativeAngle = Math.min(Math.max(state.startingDragProperties.angle * modifier + state.currentAngle, 0), 360);
-
-  if (enableCSSFilters) {
-    state.backgroundFilters.blur = 10 - Number(angle / 180).toPrecision(2) * 10;
-    background.style.filter = formatBackgroundFilters(state);
-  }
-
-  background.style.backgroundSize = `${100 + Math.floor(angle / 360 * 30)}%`;
-
   const irisBaseSize = Math.floor(angle / 360 * 30) + 5;
 
   glass.style.backgroundImage = `

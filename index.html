@@ -9,7 +9,6 @@
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.3/gh-fork-ribbon.min.css" />
   <link rel="stylesheet" href="./style.css">
-  <script src="./script.js" defer></script>
 </head>
 
 <body>
@@ -52,10 +51,35 @@
       </div>
     </div>
   </div>
-  <div class="background-container">
-    <div class="background-image transition"></div>
+  <video id="video" width="500px" height="500px" autoplay="autoplay" style="display: none;"></video>
+  <!-- 触发按钮 -->
+  <button id="triggerBtn" style="display: none;">模态框</button>
+
+  <!-- 模态框 -->
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>photo</h2>
+        <span id="closeBtn" class="close">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div class="photo">
+          <figure class="filter">
+            <canvas id="canvas" width="300px" height="300px"></canvas>
+          </figure>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="saveImg">保存图片</button>
+      </div>
+    </div>
   </div>
 
 </body>
+<script src="./html2canvas.js"></script>
+<script src="./script.js"></script>
+<script>
+  getMedia()
+</script>
 
 </html>

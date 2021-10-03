@@ -1,0 +1,105 @@
+/*模态框*/
+.modal {
+    display: none; /* 默认隐藏 */
+    position: fixed; /* 根据浏览器定位 */
+    z-index: 9999; /* 放在顶部 */
+    left: 0px;
+    top: 0px;
+    width: 100%; /* 全宽 */
+    height: 100%; /* 全高 */
+    overflow: auto; /* 允许滚动 */
+    background-color: rgba(0, 0, 0, 0.4); /* 背景色 */
+  }
+  /*模态框内容*/
+  .modal-content {
+    display: flex; /*采用flexbox布局*/
+    flex-direction: column; /*垂直排列*/
+    position: relative;
+    background-color: #fefefe;
+    margin: 10% auto; /*距顶部10% 水平居中*/
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    animation: topDown 0.4s; /*自定义动画，从模态框内容上到下出现*/
+  }
+  
+  @keyframes topDown {
+    from {
+      top: -300px;
+      opacity: 0;
+    }
+    to {
+      top: 0;
+      opacity: 1;
+    }
+  }
+  
+  /*模态框头部*/
+  .modal-header {
+    display: flex; /*采用flexbox布局*/
+    flex-direction: row; /*水平布局*/
+    align-items: center; /*内容垂直居中*/
+    justify-content: space-between;
+  }
+  .modal-body {
+    display: flex;
+    justify-content: center;
+    min-height: 380px;
+  }
+  .modal-body .photo {
+    box-shadow: 0px 0px 8px black
+  }
+  .modal-body .photo:hover {
+      cursor: pointer;
+      transform: scale(1.1,1.1);
+    }
+  /*模态框底部*/
+  .modal-footer {
+    margin-top: 10px;
+    display: flex; /*采用flexbox布局*/
+    flex-direction: row; /*水平布局*/
+    align-items: center; /*内容垂直居中*/
+    justify-content: center;
+  }
+  
+  /*关闭X 样式*/
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .filter {
+    position: relative;
+    -webkit-filter: contrast(150%) saturate(110%);
+    filter: contrast(150%) saturate(110%);
+  }
+  .filter::before {
+    content: "";
+    display: block;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+    background: -webkit-radial-gradient(
+      50% 50%,
+      circle closest-corner,
+      rgba(0, 0, 0, 0) 70,
+      rgba(34, 34, 34, 1)
+    );
+    background: radial-gradient(
+      50% 50%,
+      circle closest-corner,
+      rgba(0, 0, 0, 0) 70,
+      rgba(34, 34, 34, 1)
+    );
+  }
